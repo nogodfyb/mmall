@@ -13,4 +13,6 @@ public interface ICategoryService {
 
 	ServerResponse updateCategoryName(Integer categoryId, String categoryName);
 
+	ServerResponse selectCategoryAndChildrenById(Integer categoryId);
+
 }
