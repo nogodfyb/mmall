@@ -3,8 +3,8 @@ package com.mmall.service.impl;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.mmall.common.Const;
 import com.mmall.common.ServerResponse;
@@ -14,6 +14,7 @@ import com.mmall.pojo.User;
 import com.mmall.service.IUserSerivce;
 import com.mmall.util.MD5Util;
 
+@Service
 public class UserSerivceImpl implements IUserSerivce {
 
 	@Autowired
@@ -182,7 +183,7 @@ public class UserSerivceImpl implements IUserSerivce {
         if(user == null){
             return ServerResponse.createByErrorMessage("找不到当前用户");
         }
-        user.setPassword(org.apache.commons.lang3.StringUtils.EMPTY);
+        user.setPassword(StringUtils.EMPTY);
         return ServerResponse.createBySuccess(user);
 	}
 

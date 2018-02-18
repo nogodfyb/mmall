@@ -45,8 +45,8 @@
 		#{question,jdbcType=VARCHAR},
 		#{answer,jdbcType=VARCHAR},
 		#{role,jdbcType=INTEGER},
-		#{createTime,jdbcType=TIMESTAMP},
-		#{updateTime,jdbcType=TIMESTAMP})
+		now(),
+		now())
 	</insert>
 	<insert id="insertSelective" parameterType="com.mmall.pojo.User">
 		insert into mmall_user
@@ -142,9 +142,9 @@
 			<if test="createTime != null">
 				create_time = #{createTime,jdbcType=TIMESTAMP},
 			</if>
-			<if test="updateTime != null">
-				update_time = #{updateTime,jdbcType=TIMESTAMP},
-			</if>
+			
+				update_time = now(),
+		
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
