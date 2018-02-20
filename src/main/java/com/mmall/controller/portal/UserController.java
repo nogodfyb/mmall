@@ -12,14 +12,14 @@ import com.mmall.common.Const;
 import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.User;
-import com.mmall.service.IUserSerivce;
+import com.mmall.service.IUserService;
 
 @Controller
 @RequestMapping("/user/")
 public class UserController {
 	
 	@Autowired
-	private IUserSerivce userService;
+	private IUserService userService;
 
 	/**
 	 * 用户登录
@@ -179,6 +179,11 @@ public class UserController {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"未登录,需要强制登录status=10");
         }
         return userService.getInformation(currentUser.getId());
+    }
+    
+    @RequestMapping("index.do")
+    public String indxe(){
+    	return "index";
     }
 
 }

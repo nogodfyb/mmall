@@ -13,14 +13,14 @@ import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.User;
 import com.mmall.service.ICategoryService;
-import com.mmall.service.IUserSerivce;
+import com.mmall.service.IUserService;
 
 @RequestMapping("/manage/category")
 @Controller
 public class CategoryManagerController {
 
 	@Autowired
-	private IUserSerivce userService;
+	private IUserService userService;
 
 	@Autowired
 	private ICategoryService categoryService;

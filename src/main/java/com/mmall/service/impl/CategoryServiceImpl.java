@@ -89,7 +89,15 @@ public class CategoryServiceImpl implements ICategoryService {
         return ServerResponse.createBySuccess(categoryIdList);
     }
 	
-    //递归算法,算出子节点
+    /**
+     * 递归思路
+     * 传入父节点id,查询父节点对应的目录添加入结果集。
+     * 查询该父节点下一级的所有子节点 ，遍历所有子节点，将子节点作为父节点再次调用本方法。
+     * 递归结束条件：节点下没有子节点
+     * @param categorySet 存储所有结果的集合
+     * @param categoryId  父节点id
+     * @return
+     */
     private Set<Category> findChildCategory(Set<Category> categorySet ,Integer categoryId){
         Category category = categoryMapper.selectByPrimaryKey(categoryId);
         if(category != null){

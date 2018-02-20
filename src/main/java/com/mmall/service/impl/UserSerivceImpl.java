@@ -11,11 +11,11 @@ import com.mmall.common.ServerResponse;
 import com.mmall.common.TokenCache;
 import com.mmall.dao.UserMapper;
 import com.mmall.pojo.User;
-import com.mmall.service.IUserSerivce;
+import com.mmall.service.IUserService;
 import com.mmall.util.MD5Util;
 
 @Service
-public class UserSerivceImpl implements IUserSerivce {
+public class UserSerivceImpl implements IUserService {
 
 	@Autowired
 	private UserMapper userMapper;
