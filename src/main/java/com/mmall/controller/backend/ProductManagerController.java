@@ -128,13 +128,17 @@ public class ProductManagerController {
 		}
 		if (userService.checkAdminRole(user).isSuccess()) {
 			String path = request.getSession().getServletContext().getRealPath("upload");
-			String targetFileName = fileService.upload(file, path);
-			String url = PropertiesUtil.getProperty("ftp.server.http.prefix") + targetFileName;
+			Map map = fileService.upload(file, path);
+			String url = PropertiesUtil.getProperty("ftp.server.http.prefix") + map.get("targetFileName");
 
 			Map fileMap = Maps.newHashMap();
-			fileMap.put("uri", targetFileName);
+			fileMap.put("uri", map.get("targetFileName"));
 			fileMap.put("url", url);
-			return ServerResponse.createBySuccess(fileMap);
+			if((boolean) map.get("result")){
+				return ServerResponse.createBySuccess(fileMap);
+			}
+			return ServerResponse.createByErrorMessage("上传失败");
+			
 		} else {
 			return ServerResponse.createByErrorMessage("无权限操作");
 		}
