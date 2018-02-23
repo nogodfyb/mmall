@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.PageInfo;
 import com.mmall.common.ServerResponse;
 import com.mmall.service.IProductService;
+import com.mmall.vo.ProductDetailVo;
 
 @RequestMapping("/product/")
 @Controller
@@ -25,6 +26,12 @@ public class ProductController {
                                          @RequestParam(value = "pageSize",defaultValue = "10") int pageSize,
                                          @RequestParam(value = "orderBy",defaultValue = "") String orderBy){
         return productService.getProductByKeywordCategory(keyword,categoryId,pageNum,pageSize,orderBy);
+    }
+    
+    @RequestMapping("detail.do")
+    @ResponseBody
+    public ServerResponse<ProductDetailVo> detail(Integer productId){
+        return productService.getProductDetail(productId);
     }
 	
 }

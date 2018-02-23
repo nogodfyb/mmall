@@ -50,7 +50,7 @@ public class ProductServiceImpl implements IProductService {
 			Category category = categoryMapper.selectByPrimaryKey(categoryId);
 			if (category == null && StringUtils.isBlank(keyword)) {
 				// 没有该分类,并且还没有关键字,这个时候返回一个空的结果集,不报错
-				PageHelper.startPage(pageNum, pageSize);
+				// PageHelper.startPage(pageNum, pageSize);
 				List<ProductListVo> productListVoList = Lists.newArrayList();
 
 				PageInfo pageInfo = new PageInfo(productListVoList);
@@ -219,6 +219,23 @@ public class ProductServiceImpl implements IProductService {
 		PageInfo pageResult = new PageInfo(productList);
 		pageResult.setList(productListVoList);
 		return ServerResponse.createBySuccess(pageResult);
+	}
+
+	@Override
+	public ServerResponse<ProductDetailVo> getProductDetail(Integer productId) {
+		if (productId == null) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),
+					ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+		}
+		Product product = productMapper.selectByPrimaryKey(productId);
+		if (product == null) {
+			return ServerResponse.createByErrorMessage("产品已下架或者删除");
+		}
+		if (product.getStatus() != Const.ProductStatusEnum.ON_SALE.getCode()) {
+			return ServerResponse.createByErrorMessage("产品已下架或者删除");
+		}
+		ProductDetailVo productDetailVo = assembleProductDetailVo(product);
+		return ServerResponse.createBySuccess(productDetailVo);
 	}
 
 }
