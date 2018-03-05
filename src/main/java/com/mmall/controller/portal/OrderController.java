@@ -91,20 +91,32 @@ public class OrderController {
 		}
 		return Const.AlipayCallback.RESPONSE_FAILED;
 	}
-	
-    @RequestMapping("query_order_pay_status.do")
-    @ResponseBody
-    public ServerResponse<Boolean> queryOrderPayStatus(HttpSession session, Long orderNo){
-        User user = (User)session.getAttribute(Const.CURRENT_USER);
-        if(user ==null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
-        }
 
-        ServerResponse serverResponse = orderService.queryOrderPayStatus(user.getId(),orderNo);
-        if(serverResponse.isSuccess()){
-            return ServerResponse.createBySuccess(true);
-        }
-        return ServerResponse.createBySuccess(false);
-    }
+	@RequestMapping("query_order_pay_status.do")
+	@ResponseBody
+	public ServerResponse<Boolean> queryOrderPayStatus(HttpSession session, Long orderNo) {
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if (user == null) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),
+					ResponseCode.NEED_LOGIN.getDesc());
+		}
+
+		ServerResponse serverResponse = orderService.queryOrderPayStatus(user.getId(), orderNo);
+		if (serverResponse.isSuccess()) {
+			return ServerResponse.createBySuccess(true);
+		}
+		return ServerResponse.createBySuccess(false);
+	}
+
+	@RequestMapping("create.do")
+	@ResponseBody
+	public ServerResponse create(HttpSession session, Integer shippingId) {
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if (user == null) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),
+					ResponseCode.NEED_LOGIN.getDesc());
+		}
+		return orderService.createOrder(user.getId(), shippingId);
+	}
 
 }

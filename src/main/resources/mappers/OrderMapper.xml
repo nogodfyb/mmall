@@ -54,7 +54,7 @@
 		#{paymentTime,jdbcType=TIMESTAMP},
 		#{sendTime,jdbcType=TIMESTAMP},
 		#{endTime,jdbcType=TIMESTAMP}, #{closeTime,jdbcType=TIMESTAMP},
-		#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+		now(), now())
 	</insert>
 	<insert id="insertSelective" parameterType="com.mmall.pojo.Order">
 		insert into mmall_order
