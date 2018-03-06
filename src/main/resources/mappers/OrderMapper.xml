@@ -54,7 +54,8 @@
 		#{paymentTime,jdbcType=TIMESTAMP},
 		#{sendTime,jdbcType=TIMESTAMP},
 		#{endTime,jdbcType=TIMESTAMP}, #{closeTime,jdbcType=TIMESTAMP},
-		now(), now())
+		now(),
+		now())
 	</insert>
 	<insert id="insertSelective" parameterType="com.mmall.pojo.Order">
 		insert into mmall_order
@@ -186,9 +187,9 @@
 			<if test="createTime != null">
 				create_time = #{createTime,jdbcType=TIMESTAMP},
 			</if>
-			
-				update_time = now(),
-			
+
+			update_time = now(),
+
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
@@ -234,4 +235,14 @@
 		FROM mmall_order
 		where order_no = #{orderNo}
 	</select>
+	<select id="selectByUserId" resultMap="BaseResultMap"
+		parameterType="int">
+		SELECT
+		<include refid="Base_Column_List" />
+		from mmall_order
+		where user_id = #{userId}
+		order by create_time desc
+	</select>
+
+
 </mapper>

@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alipay.api.AlipayApiException;
@@ -117,6 +118,29 @@ public class OrderController {
 					ResponseCode.NEED_LOGIN.getDesc());
 		}
 		return orderService.createOrder(user.getId(), shippingId);
+	}
+
+	@RequestMapping("get_order_cart_product.do")
+	@ResponseBody
+	public ServerResponse getOrderCartProduct(HttpSession session) {
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if (user == null) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),
+					ResponseCode.NEED_LOGIN.getDesc());
+		}
+		return orderService.getOrderCartProduct(user.getId());
+	}
+
+	@RequestMapping("list.do")
+	@ResponseBody
+	public ServerResponse list(HttpSession session, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+			@RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if (user == null) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),
+					ResponseCode.NEED_LOGIN.getDesc());
+		}
+		return orderService.getOrderList(user.getId(), pageNum, pageSize);
 	}
 
 }
