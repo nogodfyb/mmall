@@ -143,4 +143,26 @@ public class OrderController {
 		return orderService.getOrderList(user.getId(), pageNum, pageSize);
 	}
 
+	@RequestMapping("detail.do")
+	@ResponseBody
+	public ServerResponse detail(HttpSession session, Long orderNo) {
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if (user == null) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),
+					ResponseCode.NEED_LOGIN.getDesc());
+		}
+		return orderService.getOrderDetail(user.getId(), orderNo);
+	}
+
+	@RequestMapping("cancel.do")
+	@ResponseBody
+	public ServerResponse cancel(HttpSession session, Long orderNo) {
+		User user = (User) session.getAttribute(Const.CURRENT_USER);
+		if (user == null) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),
+					ResponseCode.NEED_LOGIN.getDesc());
+		}
+		return orderService.cancel(user.getId(), orderNo);
+	}
+
 }
